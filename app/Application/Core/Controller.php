@@ -1,5 +1,7 @@
 <?php
 namespace Application\Core;
+use Model\IndexModel;
+
 class Controller {
     public $model;
     public $view;
@@ -7,9 +9,9 @@ class Controller {
 
     function __construct() {
         $this->request = \Application\Core\Requesting::getInstance();
-
+        $this->model = new IndexModel();
         \Twig_Autoloader::register();
-        $path = 'user/view/'. $this->request->getController().'/';
+        $path = 'user/View/'. $this->request->getController().'/';
         $loader = new \Twig_Loader_Filesystem($path);
         $twig = new \Twig_Environment($loader);
         $fileName = $this->request->getAction().'.html';

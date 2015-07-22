@@ -5,7 +5,7 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information, please View the LICENSE
  * file that was distributed with this source code.
  */
 class Twig_Extension_Escaper extends Twig_Extension

@@ -1,7 +1,8 @@
 {
     "autoload":{
         "psr-4":{
-            "Application\\":"app/Application"
+            "Application\\":"app/Application",
+            "Model\\":"user/Model"
         }
     },
     "require": {

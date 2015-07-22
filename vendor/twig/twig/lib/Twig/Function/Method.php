@@ -6,7 +6,7 @@
  * (c) 2009 Fabien Potencier
  * (c) 2010 Arnaud Le Blanc
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information, please View the LICENSE
  * file that was distributed with this source code.
  */
 

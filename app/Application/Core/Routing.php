@@ -14,7 +14,7 @@ class Routing {
 
         $nameController = $first.$last."Controller";
         $action = $action."Action";
-        $filePath = "user/controller/".$nameController.".php";
+        $filePath = "user/Controller/".$nameController.".php";
         $className = $nameController;
         if(file_exists($filePath)) {
             require_once($filePath);

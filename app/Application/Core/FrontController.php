@@ -10,6 +10,8 @@ class FrontController {
     }
 
     function handleRequest(){
+        $db = Database::getInstance();
+        $db->init();
         $request = Requesting::getInstance();
         Routing::run($request);
     }
