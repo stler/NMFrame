@@ -1,16 +1,16 @@
 <?php
 namespace Application\Core;
 class FrontController {
+    protected $_config;
 
-    private function __construct(){}
 
-    static function run() {
-        $instance = new FrontController();
-        $instance->handleRequest();
+    public function bootstrap() {
+        //configure
+        return $this;
     }
 
     function handleRequest(){
-        $db = Database::getInstance();
+        $db = Db::getInstance()->connect($this->_config['db']);
         $db->init();
         $request = Requesting::getInstance();
         Routing::run($request);

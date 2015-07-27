@@ -1,6 +1,7 @@
 <?php
 namespace Application\Core;
 class Requesting {
+    //Убрать статику и сделать из объекта ArrayObject
 
     private $controller = 'index';
     private  $action = 'index';
