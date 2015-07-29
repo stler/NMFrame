@@ -18,7 +18,7 @@ class Routing {
         $className = $nameController;
         if(file_exists($filePath)) {
             require_once($filePath);
-            $controller = new $nameController;
+            $controller = new $nameController($requesting);
             if(class_exists($className)){
                 if(method_exists( $controller,$action)){
                     call_user_func(array( $controller, $action));

@@ -1,57 +1,63 @@
 <?php
 namespace Application\Core;
-class Requesting {
-    //Убрать статику и сделать из объекта ArrayObject
+class Requesting extends \ArrayObject{
 
-    private $controller = 'index';
-    private  $action = 'index';
-    private  $type;
-    private  $params = array();
-    private static $instance;
+    private $param = array();
 
-    private function __construct() {
-        $this->type = $_SERVER['REQUEST_METHOD'];
+    public function __construct() {
+        $this->param['type'] = $_SERVER['REQUEST_METHOD'];
         $uri = explode('/', $_SERVER['REQUEST_URI']);
-        $this->controller = !empty($uri[1]) ? $uri[1]:'index';
-        $this->action = !empty($uri[2])? $uri[2]:'index';
-        for($i = 3; $i<count($uri);$i++) {
-            $this->params[] = $uri[$i];
-        }
-        foreach($_POST as $request => $value) {
-            $this->params[$request] = $value;
-        }
-
+        $this->param['controller'] = !empty($uri[1]) ? $uri[1]:'index';
+        $this->param['action'] = !empty($uri[2])? $uri[2]:'index';
+        $this->param['params'] = $_REQUEST;
     }
 
-    public static function getInstance() {
-        if(!self::$instance){
-            return self::$instance = new Requesting();
+    public function append($value) {
+        $this->param[] = $value;
+    }
+    function offsetSet($key, $value) {
+        if ($key) {
+            $this->param[$key] = $value;
         } else {
-            return self::$instance;
+            $this->param[] = $value;
         }
     }
+    function offsetGet($key) {
+        if ( array_key_exists($key, $this->param) ) {
+            return $this->param[$key];
+        }
+    }
+    function offsetUnset($key) {
+        if ( array_key_exists($key, $this->param) ) {
+            unset($this->param[$key]);
+        }
+    }
+    function offsetExists($offset) {
+        return array_key_exists($offset, $this->param);
+    }
+
     public function getController() {
-        return $this->controller;
+        return $this->param['controller'];
     }
 
     public function getAction() {
-        return $this->action;
+        return $this->param['action'];
     }
 
     public  function getMethod() {
-        return $this->type;
+        return $this->param['type'];
     }
     public function getParam($key) {
-        if(!empty($this->params[$key])){
-            return $this->params[$key];
+        if(!empty($this->param['params'][$key])){
+            return $this->param['params'][$key];
         } else {
             return null;
         }
     }
 
     public function getParams() {
-        if(!empty($this->params)){
-            return $this->params;
+        if(!empty($this->param['params'])){
+            return $this->param['params'];
         } else {
             return null;
         }

@@ -7,9 +7,9 @@ class Controller {
     public $view;
     public $request;
 
-    function __construct() {
-        $this->request = \Application\Core\Requesting::getInstance();
-        $this->model = new IndexModel();
+    function __construct(Requesting $request) {
+        $this->request = $request;
+        $this->model = Db::getInstance()->getAdapter();
         \Twig_Autoloader::register();
         $path = 'user/View/'. $this->request->getController().'/';
         $loader = new \Twig_Loader_Filesystem($path);

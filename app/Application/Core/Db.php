@@ -1,10 +1,10 @@
 <?php
 namespace Application\Core;
-
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
 class Db {
     private static $instance;
-    private $db;
-    private $configDb = 'app/Application/Config/ConfigDb.php';
+    private $_adapter;
     private function __construct(){}
 
     public static function getInstance() {
@@ -14,10 +14,18 @@ class Db {
         return self::$instance;
     }
 
-    private function connect($adapter, $config) {
-        $adapterClass = 'Db/Connect/' $adapter;
+    public  function connect($adapter, $config) {
+        $paths = array("/user/Model/");
+        $isDevMode = false;
+        $dbParams = array(
+            'driver'   => $adapter,
+            'user'     => $config['DB_USER'],
+            'password' => $config['DB_PASSWORD'],
+            'dbname'   => $config['DB_NAME'],
+        );
 
-        $this->_adapter = new $adapterClass($config);
+        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
+        $this->_adapter =  EntityManager::create($dbParams, $config);
     }
 
     public function getAdapter()
